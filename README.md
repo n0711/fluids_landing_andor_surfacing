@@ -31,4 +31,4 @@ The JSONL observation contract is described in [schemas/observation-v1.schema.js
 
 Scenes are **abstract screen-space drawings**, not simulated planetary surface physics. The proxy's motion is an illustrative interpolation, not a vehicle trajectory. The target is not a trained detector class, and the fixtures do not validate tracking accuracy, navigation, real-time links, hardware or spaceflight.
 
-Licensed under the MIT License (see [LICENSE](LICENSE)).
+Licensed under the Apache License 2.0 (see [LICENSE](LICENSE)).
