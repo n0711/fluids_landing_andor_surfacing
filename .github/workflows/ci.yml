@@ -27,11 +27,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Rebuild synthetic counterfactual evidence
-        run: python -m scripts.ci_evidence --out .ci-evidence
+        run: python -m scripts.ci_evidence --out ci-evidence
       - name: Upload reproducible research receipt
         uses: actions/upload-artifact@v4
         with:
           name: observation-integrity-evidence
-          path: .ci-evidence/
+          path: ci-evidence/
           if-no-files-found: error
           retention-days: 30
