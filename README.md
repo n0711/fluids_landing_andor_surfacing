@@ -2,7 +2,7 @@
 
 **Software-only, open-source research prototype** for synthetic landing-scene perception and observation evidence. This is **not** a flight simulator, rocket dynamics model, guidance system, or physical landing controller.
 
-## Milestones 2–3: deterministic camera datasets and observation integrity evidence
+## Milestones 2–4: synthetic camera evidence, freshness audit and offline report adapters
 
 Requires **Python 3.10+**; the generator uses only the standard library.
 
@@ -16,7 +16,7 @@ Outputs are `manifest.json`, `observations.jsonl`, and `frames/frame_0000.png`, 
 
 The JSONL observation contract is described in [schemas/observation-v1.schema.json](schemas/observation-v1.schema.json). The built-in validator checks provenance, sequence timestamps, bounding-box containment, PNG signatures and file hashes, but is not a general-purpose JSON Schema validator.
 
-The optional MOTChallenge reader is **format-compatible** with VERA-MOT output; it has not run the VERA-MOT model. No ArduPilot SITL, ROS3, or ROS 2 runtime integration has been exercised here. Planned receive-only adapters are described in [SPACE_LANDING_RESEARCH.md](SPACE_LANDING_RESEARCH.md); model training, physical flight, guidance, actuator and vehicle-control code are outside scope.
+The optional MOTChallenge reader is **format-compatible** with VERA-MOT output; it has not run the VERA-MOT model. The [offline ROS3 and VERA report bundle](docs/MULTISOURCE_EVIDENCE.md) imports exported summary files with **no clock or identity synchronization assumptions**. No ArduPilot SITL, ROS3, ROS 2, or VERA-MOT runtime integration has been exercised here. Planned receive-only adapters are described in [SPACE_LANDING_RESEARCH.md](SPACE_LANDING_RESEARCH.md); model training, physical flight, guidance, actuator and vehicle-control code are outside scope.
 
 ## Automated research evidence (GitHub Actions; no local setup)
 
@@ -29,6 +29,7 @@ Optional offline commands for other researchers:
 ```bash
 python -m space_landing.integrity runs/example
 python -m space_landing.mot_evaluation runs/example path/to/existing-vera-compatible.mot
+python -m space_landing.evidence_bundle runs/example --ros3 path/to/ros3-summary.json --vera path/to/vera-summary.json
 ```
 
 These commands only read previously generated files and never send commands to any system.
@@ -39,7 +40,8 @@ These commands only read previously generated files and never send commands to a
 - [x] Versioned synthetic observation JSON schema
 - [x] Offline reader/evaluator for MOTChallenge 10-column files (VERA-MOT format compatible; no actual model run)
 - [ ] Optional ArduPilot SITL receive-only telemetry adapter
-- [ ] ROS3-compatible receive-only observation/replay evaluation
+- [x] Read-only offline ROS3 evidence-v1 and VERA aggregate-v1 summary import (without clock alignment)
+- [ ] ROS3 runtime recording/replay validation against a separately run integration
 - [x] Synthetic arrival-versus-capture freshness ablations with SHA-256 CI evidence receipts
 - [ ] Real tracking-quality benchmarks against independently generated VERA-MOT model results
 - [ ] Clock-aligned offline cross-source evaluation after independently verified source timestamps
