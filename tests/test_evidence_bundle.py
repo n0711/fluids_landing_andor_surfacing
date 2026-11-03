@@ -118,6 +118,16 @@ class ExternalEvidenceBundleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "non-finite"):
             bundle(self.dataset, ros3_report=bad)
 
+    def test_recoveries_cannot_exceed_stale_transitions(self):
+        self.ros["observed_stale_to_healthy_recoveries"] = 2
+        with self.assertRaisesRegex(ValueError, "counters"):
+            bundle(self.dataset, ros3_report=self._file("ros.json", self.ros))
+
+    def test_huge_json_integer_is_not_accepted_as_timeout(self):
+        self.ros["stale_after_s"] = 10**500
+        with self.assertRaisesRegex(ValueError, "finite"):
+            bundle(self.dataset, ros3_report=self._file("ros.json", self.ros))
+
     def test_oversized_json_is_rejected(self):
         huge = self.root / "huge.json"
         huge.write_bytes(b"x" * 1_000_001)
