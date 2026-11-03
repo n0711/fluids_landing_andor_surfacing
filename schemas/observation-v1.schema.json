@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/n0711/fluids_landing_andor_surfacing/blob/main/schemas/observation-v1.schema.json",
+  "title": "Synthetic landing visual observation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "simulation_only", "source", "frame_id", "timestamp_ns", "image", "objects", "provenance"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "simulation_only": {"const": true},
+    "source": {"const": "synthetic_camera"},
+    "frame_id": {"type": "string", "pattern": "^camera-[0-9]{4}$"},
+    "timestamp_ns": {"type": "integer", "minimum": 0},
+    "image": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "width", "height"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^frames/frame_[0-9]{4}\\.png$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "width": {"type": "integer", "minimum": 64, "maximum": 1024},
+        "height": {"type": "integer", "minimum": 64, "maximum": 1024}
+      }
+    },
+    "objects": {
+      "type": "array", "minItems": 1, "maxItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["track_id", "class_label", "bbox_xywh"],
+        "properties": {
+          "track_id": {"const": "visual-proxy-1"},
+          "class_label": {"const": "visual_proxy"},
+          "bbox_xywh": {
+            "type": "array", "prefixItems": [
+              {"type": "integer", "minimum": 0}, {"type": "integer", "minimum": 0},
+              {"type": "integer", "minimum": 1}, {"type": "integer", "minimum": 1}
+            ], "minItems": 4, "maxItems": 4
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["origin", "generator", "seed", "scenario"],
+      "properties": {
+        "origin": {"const": "synthetic"},
+        "generator": {"const": "space_landing.synthetic"},
+        "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "scenario": {"const": "visual_landing_proxy_v1"}
+      }
+    }
+  }
+}
