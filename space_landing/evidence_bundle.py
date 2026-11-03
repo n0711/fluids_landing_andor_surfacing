@@ -58,7 +58,13 @@ def _integer(obj: dict, name: str, *, minimum: int = 0) -> int:
 
 def _number(obj: dict, name: str, *, strictly_positive: bool = False) -> float:
     value = obj.get(name)
-    if type(value) not in (float, int) or not math.isfinite(value):
+    if type(value) not in (float, int):
+        raise ValueError(f"{name} must be a finite number")
+    try:
+        finite = math.isfinite(value)
+    except OverflowError:
+        finite = False
+    if not finite:
         raise ValueError(f"{name} must be a finite number")
     if value < 0 or (strictly_positive and value == 0):
         raise ValueError(f"{name} must be positive or nonnegative as required")
@@ -91,7 +97,7 @@ def _ros3_summary(report: dict, report_sha: str) -> dict:
     state_changes = _integer(report, "observed_state_change_count")
     recoveries = _integer(report, "observed_stale_to_healthy_recoveries")
     if (total != payload + silence or payload != accepted + rejected
-            or stale_changes > state_changes or recoveries > state_changes):
+            or stale_changes > state_changes or recoveries > stale_changes):
         raise ValueError("inconsistent ROS3 receiver counters")
     state = report.get("final_state")
     if state not in ("WAITING", "HEALTHY", "STALE"):
