@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Rebuild synthetic counterfactual evidence
-        run: python scripts/ci_evidence.py --out .ci-evidence
+        run: python -m scripts.ci_evidence --out .ci-evidence
       - name: Upload reproducible research receipt
         uses: actions/upload-artifact@v4
         with:
