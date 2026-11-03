@@ -15,7 +15,7 @@
       "type": "object", "additionalProperties": false,
       "required": ["path", "sha256", "width", "height"],
       "properties": {
-        "path": {"type": "string", "pattern": "^frames/frame_[0-9]{4}\.png$"},
+        "path": {"type": "string", "pattern": "^frames/frame_[0-9]{4}\\.png$"},
         "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "width": {"type": "integer", "minimum": 64, "maximum": 1024},
         "height": {"type": "integer", "minimum": 64, "maximum": 1024}
