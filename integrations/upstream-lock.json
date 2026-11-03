@@ -1,0 +1,16 @@
+{
+  "lock_version": 1,
+  "ros3": {
+    "repository": "n0711/ROS3-Limassol",
+    "commit": "0de77193ed1c1a9b83b7b38ddc1d3af4e59d6e5e",
+    "exporter": "ros3_limassol.evidence",
+    "demo": "ros3_limassol.demo"
+  },
+  "vera_mot": {
+    "repository": "n0711/vera-mot",
+    "commit": "c54b0059b2ffcf8f0c6de07feb0a4847a7eec1d8",
+    "exporter": "vera_mot.vision_evidence",
+    "note": "Only the aggregate exporter runs. VERA-MOT training/inference is not executed."
+  },
+  "scope": "github_hosted_synthetic_demo_and_offline_evidence_only"
+}
