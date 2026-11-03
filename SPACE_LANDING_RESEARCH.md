@@ -3,7 +3,7 @@
 This repository is an open-source, **software-only** research workspace for studying visual tracking, telemetry reliability, and reproducible synthetic landing-event datasets.
 
 ## Status
-Research scaffold only. No integrated simulator, validated ROS graph, ArduPilot SITL run, VERA-MOT model run, or ROS3 experiment is claimed.
+Milestone 2 contains tested deterministic synthetic PNG scenes, ground-truth observation JSONL, a versioned JSON Schema, and a local content validator. This is a **screen-space observation fixture**, not a dynamics or flight simulator. No integrated ArduPilot SITL, validated ROS graph, VERA-MOT model run, or ROS3 experiment is claimed.
 
 ## Components
 - **Synthetic scene generator:** produces pre-recorded or generated camera frames and abstract landing-event annotations; no physical vehicle dynamics or propulsion model.
@@ -20,8 +20,8 @@ ArduPilot SITL telemetry --> read-only observer ---+
 ```
 
 ## Milestones
-1. Add deterministic synthetic frames, labels, manifest, and unit tests.
-2. Define a versioned JSON observation schema with source, timestamp, frame ID, and simulation-only provenance.
+1. **Done:** deterministic synthetic frames, labels, manifest, and standard-library unit tests.
+2. **Done:** versioned JSON observation schema with source, timestamps, frame IDs, and simulation-only provenance.
 3. Build optional, read-only adapters for VERA-MOT and ArduPilot SITL, guarded by feature flags.
 4. Evaluate ROS3 record/replay under synthetic message drop and delay.
 5. Publish repeatable metrics and explicit limitations.
@@ -38,4 +38,4 @@ ArduPilot SITL telemetry --> read-only observer ---+
 - https://github.com/n0711/ROS3-Limassol
 
 ## License
-Select an OSI-approved open-source license before accepting contributions or publishing reusable code.
+Apache License 2.0 is already present in the repository. Maintain this license for the research fixtures unless the repository owner explicitly changes it.
